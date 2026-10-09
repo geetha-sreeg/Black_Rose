@@ -2,11 +2,12 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <script src="https://iframe.chat/scripts/main.min.js"></script>
+
   <title>BlackRose OS</title>
   <link rel="stylesheet" href="web.css">
 </head>
-<body style="background-image: url('assets/image copy 2.png'); background-size: cover; background-position: center;">
+<body style="background-image: url('assets/image copy 3.png'); background-size: cover; background-position: center;">
   <div id = "welcome" style="border: 1.5px dashed #5a544b;
   background-color: rgb(247, 245, 242);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -24,6 +25,7 @@
 
   </div>
 
+
   <div style ="position: fixed; width: 99.9%; display: flex; backdrop-filter: blur(10px); background-color: rgba(213, 201, 236, 0.25); color: #33063f; justify-content: space-between; right: 0; left: 0; padding: 1px;">
   <p style = "margin-left: 10px;"><b>BlackRose OS</b></p>
   <p id = "currentTime" style = "margin-right: 10px;"><b>    </b></p>
@@ -37,6 +39,7 @@
        <span aria-hidden="true">★ Status: Existential Crisis ★</span>
       </div>
   </div>
+
 </footer>
     <style>
             #musicplayer{
@@ -145,12 +148,12 @@
         </style>
     </head>
     <body>
-        <div id="musicplayer">
-            <div id="musicplayerheader" class="now-playing">Playing 1 of 2</div>
+        <div id="musicplayer" style = "border-radius: 25px;">
+            <div id="musicplayerheader" class="now-playing" style = "border-radius: 20px;">Playing 1 of 2</div>
  
             <div class="track-info">
-                <div class="track-name">Song Name</div>
-                <div class="track-artist"></div>
+                <div class="track-name" style = "border-radius: 10px;">Song Name</div>
+                <div class="track-artist"style = "border-radius: 10px;"></div>
             </div>
  
             <div class="controls">
@@ -345,6 +348,12 @@
                 }
             }
         </script>
+
+
+<div id="tamagotchi" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; display: flex; flex-direction: column; align-items: center;">
+    <div id="tamagotchiheader" style="cursor: move; user-select: none;">Tamagotchi</div>
+    <a href="https://tamanotchi.world/39084c"><img src="https://tamanotchi.world/i2/39084" alt="It's tamaNOTchi! Click to feed!"></a>
+</div>
 <script src="main.js"></script>
 
   </body>

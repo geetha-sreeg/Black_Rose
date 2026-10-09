@@ -8,6 +8,7 @@ const timeText = document.querySelector("#currentTime");
     // Make the DIV element draggable:
 dragElement(document.getElementById("welcome"));
 dragElement(document.getElementById("musicplayer"));
+dragElement(document.getElementById("tamagotchi"));
 // Step 1: Define a function called `dragElement` that makes an HTML element draggable.
 function dragElement(element) {
   // Step 2: Set up variables to keep track of the element's position.
