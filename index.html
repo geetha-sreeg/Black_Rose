@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BlackRose OS</title>
+  <link rel="stylesheet" href="web.css">
+</head>
+<body style="background-image: url('assets/image copy 2.png'); background-size: cover; background-position: center;">
+  <div id = "welcome" style="border: 1.5px dashed #5a544b;
+  background-color: rgb(247, 245, 242);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  color: #2c3036;
+  font-family: Georgia, serif;
+  width: 250px;
+  border-radius: 20px;
+  padding: 25px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);">
+<h1>BlackRose OS</h1>
+<p>Customizing my character, because everything sucks, I may have failed everything and I'm bored asf.</p>
+
+  </div>
+
+  <div style ="position: fixed; width: 99.9%; display: flex; backdrop-filter: blur(10px); background-color: rgba(213, 201, 236, 0.25); color: #33063f; justify-content: space-between; right: 0; left: 0; padding: 1px;">
+  <p style = "margin-left: 10px;"><b>BlackRose OS</b></p>
+  <p id = "currentTime" style = "margin-right: 10px;"><b>    </b></p>
+</div>
+<footer class="bottom-bar">
+    <div class="ticker">
+      <div class="ticker-track">
+    <span>"I miss the days when we were crushing on each other, now you're just crushing my soul, my lover"</span>
+      <span aria-hidden="true">★ Status: Existential Crisis ★</span>
+      <span>"I've been floating in the static, trying to find a spark, just another ghost that's dancing in the dark"</span>
+       <span aria-hidden="true">★ Status: Existential Crisis ★</span>
+      </div>
+  </div>
+</footer>
+    <style>
+            #musicplayer{
+                font-family:', sans-serif'; /* default font */
+                background:rgb(247, 245, 242); /* background color of player */
+                border:4px solid #693a1a; /* border around player */
+                width:200px; /* width of the player - make it 100% if you want it to fill your container */
+                padding:10px;
+                text-align:center; 
+                display:flex;
+                flex-direction:column;
+                gap:10px;
+                position:fixed;
+                top:80px;
+                left:20px;
+                z-index:1;
+            }
+
+            #musicplayerheader{
+                cursor:move;
+                user-select:none;
+            }
+ 
+            .songtitle, .track-info, .now-playing{
+                padding:5px;
+            }
+ 
+            .controls{
+                display:flex; 
+                flex-direction:column; 
+                gap:10px;
+            }
+ 
+            .buttons{
+                display:flex;
+                justify-content:center;
+                font-size:17px !important; /* size of controls */
+                width:100%;
+            }
+ 
+            .buttons div{
+                width:33.3%;
+            }
+ 
+            .playpause-track, .prev-track, .next-track{
+                color:#533806; /* color of buttons */
+                font-size:35px !important; /* size of buttons */
+            }
+ 
+            .volume-icon{
+                font-size:22px !important; /* size of volume icon */
+            }
+ 
+            .seeking, .volume{
+                display:flex;
+                flex-direction:row;
+                align-items:center;
+                gap:5px;
+            }
+ 
+            .now-playing, .track-info{
+                background-color:#846a25; /* background color of top two boxes */
+            }
+ 
+            .now-playing{
+                font-weight:bold;
+            }
+ 
+            input[type=range]{
+                -webkit-appearance:none; /* removes default appearance of the tracks */
+                width:100%;
+            }
+ 
+            input[type=range]:focus{
+                outline:none; /* removes outline around tracks when focusing */
+            }
+ 
+            input[type=range]::-webkit-slider-runnable-track{
+                width:100%;
+                height:4px; /* thickness of seeking track */
+                background:#5f2407; /* color of seeking track */
+            }
+ 
+            input[type=range]::-webkit-slider-thumb{
+                height:10px; /* height of seeking square */
+                width:10px; /* width of seeking square */
+                border-radius:0px; /* change to 5px if you want a circle seeker */
+                background:#5f2407; /* color of seeker square */
+                -webkit-appearance:none;
+                margin-top:-3px; /* fixes the weird margin around the seeker square in chrome */
+            }
+ 
+            input[type=range]::-moz-range-track{
+                width:100%;
+                height:4px; /* thickness of seeking track */
+                background:#5f2407; /* color of seeking track */
+            }
+ 
+            input[type=range]::-moz-range-thumb{
+                height:10px; /* height of seeking square */
+                width:10px; /* width of seeking square */
+                border-radius:0px; /* change to 5px if you want a circle seeker */
+                background:#5f2407; /* color of seeker square */
+                border:none; /* removes weird border around seeker square in firefox */
+            }
+        </style>
+    </head>
+    <body>
+        <div id="musicplayer">
+            <div id="musicplayerheader" class="now-playing">Playing 1 of 2</div>
+ 
+            <div class="track-info">
+                <div class="track-name">Song Name</div>
+                <div class="track-artist"></div>
+            </div>
+ 
+            <div class="controls">
+                <div class="seeking">
+                    <div class="current-time">00:00</div>
+ 
+                    <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
+ 
+                    <div class="total-duration">0:00</div>
+                </div>
+ 
+                <div class="buttons">
+                    <div class="prev-track" onclick="prevTrack()">&#171;</div>
+ 
+                    <div class="playpause-track" onclick="playpauseTrack()">&#9654;</div>
+ 
+                    <div class="next-track" onclick="nextTrack()">&#187;</div>
+                </div>
+ 
+                <div class="volume">
+                    <div class="volume-icon">&#128362;</div>
+                    <input type="range" min="1" max="100" value="25" class="volume_slider" onchange="setVolume()"> <!-- the default volume value is 25, change this if you want it to be higher or lower (i wouldn't recommend it bc it gets really loud) -->
+                </div>
+            </div>
+ 
+            <audio id="music" src=""></audio>
+        </div>
+ 
+        <script>
+            // initiate variables
+            let now_playing = document.querySelector(".now-playing");
+            let track_name = document.querySelector(".track-name");
+            let track_artist = document.querySelector(".track-artist");
+ 
+ 
+            let playpause_btn = document.querySelector(".playpause-track");
+            let next_btn = document.querySelector(".next-track");
+            let prev_btn = document.querySelector(".prev-track");
+ 
+            let seek_slider = document.querySelector(".seek_slider");
+            let volume_slider = document.querySelector(".volume_slider");
+            let curr_time = document.querySelector(".current-time");
+            let total_duration = document.querySelector(".total-duration");
+ 
+            let track_index = 0;
+            let isPlaying = false;
+            let updateTimer;
+ 
+            // create new audio element
+            let curr_track = document.getElementById("music");
+ 
+            //
+            // DEFINE YOUR SONGS HERE!!!!!
+            // MORE THAN FOUR SONGS CAN BE ADDED!!
+            // JUST ADD ANOTHER BRACKET WITH NAME ARTIST AND PATH
+            // 
+            let track_list = [
+                {
+                    name:"crushing",
+                    artist:"sombr",
+                    path:"https://files.catbox.moe/emwka5.mp3"
+                },
+                {
+                    name:"do i ever cross your mind?",
+                    artist:"sombr",
+                    path:"https://files.catbox.moe/5glow8.mp3"
+                },
+                {
+                    name:"fine",
+                    artist:"sombr",
+                    path:"assets/fine - sombr (128k).mp3"
+                },
+                {
+                    name: "self-aware",
+                    artist:"temper city, vicky",
+                    path: "assets/Self Aware - Temper City (cover) - they call me vicky.mp3",
+                },
+            ];
+            //
+            //
+            //
+            //
+            //
+ 
+            function loadTrack(track_index){
+                clearInterval(updateTimer);
+                resetValues();
+ 
+                // load a new track
+                curr_track.src = track_list[track_index].path;
+                curr_track.load();
+ 
+                // update details of the track
+                track_name.textContent = track_list[track_index].name;
+                track_artist.textContent = track_list[track_index].artist;
+                now_playing.textContent = "Playing " + (track_index + 1) + " of " + track_list.length;
+ 
+                // set an interval of 1000 milliseconds for updating the seek slider
+                updateTimer = setInterval(seekUpdate, 1000);
+ 
+                // move to the next track if the current one finishes playing 
+                curr_track.addEventListener("ended", nextTrack);
+ 
+            }
+ 
+            // reset values
+            function resetValues(){
+                curr_time.textContent = "0:00";
+                total_duration.textContent = "0:00";
+                seek_slider.value = 0;
+            }
+ 
+            // load the first track in the tracklist
+            loadTrack(track_index);
+ 
+            // checks if song is playing
+            function playpauseTrack(){
+                if (!isPlaying) playTrack();
+                else pauseTrack();
+            }
+ 
+            // plays track when play button is pressed
+            function playTrack(){
+                curr_track.play();
+                isPlaying = true;
+ 
+                // replace icon with the pause icon
+                playpause_btn.innerHTML = '&#9646;';
+            }
+ 
+            // pauses track when pause button is pressed
+            function pauseTrack(){
+                curr_track.pause();
+                isPlaying = false;
+ 
+                playpause_btn.innerHTML = '&#9654;';
+            }
+ 
+            // moves to the next track
+            function nextTrack(){
+                if (track_index < track_list.length - 1)
+                    track_index += 1;
+                else track_index = 0;
+                loadTrack(track_index);
+                playTrack();
+            }
+ 
+            // moves to the previous track
+            function prevTrack(){
+                if (track_index > 0)
+                    track_index -= 1;
+                else track_index = track_list.length;
+                loadTrack(track_index);
+                playTrack();
+            }
+ 
+            // seeker slider
+            function seekTo(){
+                seekto = curr_track.duration * (seek_slider.value / 100);
+                curr_track.currentTime = seekto;
+            }
+ 
+            // volume slider
+            function setVolume(){
+                curr_track.volume = volume_slider.value / 100;
+            }
+ 
+            setVolume();
+ 
+            function seekUpdate(){
+                let seekPosition = 0;
+ 
+                // check if the current track duration is a legible number
+                if (!isNaN(curr_track.duration)){
+                    seekPosition = curr_track.currentTime * (100 / curr_track.duration);
+                    seek_slider.value = seekPosition;
+ 
+                    // calculate the time left and the total duration
+                    let currentMinutes = Math.floor(curr_track.currentTime / 60);
+                    let currentSeconds = Math.floor(curr_track.currentTime - currentMinutes * 60);
+                    let durationMinutes = Math.floor(curr_track.duration / 60);
+                    let durationSeconds = Math.floor(curr_track.duration - durationMinutes * 60);
+ 
+                    // adding a zero to the single digit time values
+                    if (currentSeconds < 10){ currentSeconds = "0" + currentSeconds; }
+                    if (durationSeconds < 10){ durationSeconds = "0" + durationSeconds; }
+                    if (currentMinutes < 10){ currentMinutes = currentMinutes; }
+                    if (durationMinutes < 10){ durationMinutes = durationMinutes; }
+ 
+                    curr_time.textContent = currentMinutes + ":" + currentSeconds;
+                    total_duration.textContent = durationMinutes + ":" + durationSeconds;
+                }
+            }
+        </script>
+<script src="main.js"></script>
+
+  </body>
+
+</html>
